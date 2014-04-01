@@ -13,15 +13,26 @@ namespace PWCrackingConsumer
     public static class Program
     {
         public static PWCrackingService Pwc = new PWCrack.PWCrackingService();
-        private const int NumberOfSlaves = 2;
+
+        public delegate string[] CrackDelegate(string[] words, string[] userInfos);
+
+        public static List<CrackDelegate> crackDelegates = new List<CrackDelegate>();
+
+        static Program()
+        {
+            var a = new PWCrack.PWCrackingService();
+            crackDelegates.Add(a.Crack);
+//            var b = new PWCrack2.PWCrackingService();
+//            crackDelegates.Add(b.Crack);
+        }
 
         static void Main(string[] args)
         {
             //Split the file into an array
             var userInfos = ReadFile("passwords.txt");
 
-            //var words = ReadFile("webster-dictionary.txt"); //311141 words
-            var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
+            var words = ReadFile("webster-dictionary.txt"); //311141 words
+//            var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
 
             var stopwatch = Stopwatch.StartNew();
             var result = SendRequests(words, userInfos, 1000);
@@ -72,7 +83,7 @@ namespace PWCrackingConsumer
                 k++; //New request/Task number
 
                 serviceId++; //Select new service to use
-                if (serviceId == NumberOfSlaves) //Loop around to the first service again when all services are used
+                if (serviceId == crackDelegates.Count) //Loop around to the first service again when all services are used
                     serviceId = 0;
             }
             try

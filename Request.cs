@@ -32,13 +32,7 @@ namespace PWCrackingConsumer
         public string[] DoIt()
         {
             string[] result;
-            var Pwc1 = new PWCrack.PWCrackingService();
-            switch (_serviceId) //Based on the service ID, request using that service
-            {
-                default:
-                    result = Pwc1.Crack(_words, _userInfos);
-                    break;
-            }
+            result = Program.crackDelegates[_serviceId](_words, _userInfos);
             
             if (result.Length > 0)
             {

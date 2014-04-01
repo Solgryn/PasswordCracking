@@ -62,10 +62,10 @@
   </wsdl:binding>
   <wsdl:service name="PWCrackingService">
     <wsdl:port name="PWCrackingServiceSoap" binding="tns:PWCrackingServiceSoap">
-      <soap:address location="http://localhost:65080/PWCrackingService.asmx" />
+      <soap:address location="http://10.154.1.246:65080/PWCrackingService.asmx" />
     </wsdl:port>
     <wsdl:port name="PWCrackingServiceSoap12" binding="tns:PWCrackingServiceSoap12">
-      <soap12:address location="http://localhost:65080/PWCrackingService.asmx" />
+      <soap12:address location="http://10.154.1.246:65080/PWCrackingService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
