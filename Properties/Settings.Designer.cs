@@ -27,9 +27,9 @@ namespace PWCrackingConsumer.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:65080/PWCrackingService.asmx")]
-        public string PWCrackingConsumer_PWCS_PWCrackingService {
+        public string PWCrackingConsumer_PWCrack_PWCrackingService {
             get {
-                return ((string)(this["PWCrackingConsumer_PWCS_PWCrackingService"]));
+                return ((string)(this["PWCrackingConsumer_PWCrack_PWCrackingService"]));
             }
         }
     }

@@ -35,6 +35,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,7 +52,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Web References\PWCS\Reference.cs">
+    <Compile Include="Web References\PWCrack\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -62,17 +64,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\PWCS\PWCrackingService.wsdl" />
-    <None Include="Web References\PWCS\Reference.map">
+    <None Include="Web References\PWCrack\PWCrackingService.wsdl" />
+    <None Include="Web References\PWCrack\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\PWCS\UserInfoClearText.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
@@ -80,18 +76,21 @@
   <ItemGroup>
     <WebReferenceUrl Include="http://localhost:65080/PWCrackingService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\PWCS\</RelPath>
+      <RelPath>Web References\PWCrack\</RelPath>
       <UpdateFromURL>http://localhost:65080/PWCrackingService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>PWCrackingConsumer_PWCS_PWCrackingService</CachedSettingsPropName>
+      <CachedSettingsPropName>PWCrackingConsumer_PWCrack_PWCrackingService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web References\PWCS\PWCrackingService.disco" />
+    <None Include="Web References\PWCrack\PWCrackingService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

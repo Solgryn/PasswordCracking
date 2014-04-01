@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
       <s:element name="Crack">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="words" type="tns:ArrayOfString" />
-            <s:element minOccurs="0" maxOccurs="1" name="userInfos" type="tns:ArrayOfUserInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="userInfos" type="tns:ArrayOfString" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -15,36 +15,13 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="ArrayOfUserInfo">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="UserInfo" nillable="true" type="tns:UserInfo" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="UserInfo">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="EntryptedPasswordBase64" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="EntryptedPassword" type="s:base64Binary" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="CrackResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CrackResult" type="tns:ArrayOfUserInfoClearText" />
+            <s:element minOccurs="0" maxOccurs="1" name="CrackResult" type="tns:ArrayOfString" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfUserInfoClearText">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="UserInfoClearText" nillable="true" type="tns:UserInfoClearText" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="UserInfoClearText">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
-        </s:sequence>
-      </s:complexType>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="CrackSoapIn">
