@@ -52,6 +52,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Request.cs" />
     <Compile Include="Web References\PWCrack\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
