@@ -22,8 +22,8 @@ namespace PWCrackingConsumer
         {
             var a = new PWCrack.PWCrackingService();
             crackDelegates.Add(a.Crack);
-//            var b = new PWCrack2.PWCrackingService();
-//            crackDelegates.Add(b.Crack);
+            //            var b = new PWCrack2.PWCrackingService();
+            //            crackDelegates.Add(b.Crack);
         }
 
         static void Main(string[] args)
@@ -31,13 +31,15 @@ namespace PWCrackingConsumer
             //Split the file into an array
             var userInfos = ReadFile("passwords.txt");
 
-            var words = ReadFile("webster-dictionary.txt"); //311141 words
-//            var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
+            //var words = ReadFile("webster-dictionary.txt"); //311141 words
+            var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
 
+            Console.WriteLine(words[1] + "hi");
+            /*
             var stopwatch = Stopwatch.StartNew();
             var result = SendRequests(words, userInfos, 1000);
             stopwatch.Stop();
-            
+
             //Output results
             Console.WriteLine("____");
             Console.WriteLine("Final results:");
@@ -46,8 +48,8 @@ namespace PWCrackingConsumer
                 Console.WriteLine("\t" + string.Join(", ", s));
             }
             Console.WriteLine("____");
-           
-            Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+
+            Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);*/
         }
 
         public static string[] ReadFile(String filename)
@@ -69,7 +71,7 @@ namespace PWCrackingConsumer
         public static List<string[]> SendRequests(string[] words, string[] userInfos, int chunkSize)
         {
             var finalResult = new List<string[]>(); //The final result list
-            var tasks = new Task<string[]>[(words.Length/chunkSize)+1]; //Each request is a task
+            var tasks = new Task<string[]>[(words.Length / chunkSize) + 1]; //Each request is a task
             var k = 0; //Which current request/task number
             var serviceId = 0; //The service to use
 
@@ -78,7 +80,7 @@ namespace PWCrackingConsumer
             {
                 Console.WriteLine("Started request #" + k + " (word #" + i + " to " + (i + chunkSize) + ")" + " service ID: " + serviceId);
                 var request = new Request(SubArray(words, i, chunkSize), userInfos, serviceId); //Make a request with the chunk, userInfos and the service
-                var task = Task.Factory.StartNew((Func<string[]>) request.DoIt); //Create a new task and run it
+                var task = Task.Factory.StartNew((Func<string[]>)request.DoIt); //Create a new task and run it
                 tasks[k] = task; //Add to the task array
                 k++; //New request/Task number
 

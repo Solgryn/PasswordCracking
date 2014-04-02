@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="PWCrackingConsumer_PWCrack_PWCrackingService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://10.154.1.246:65080/PWCrackingService.asmx</Value>
+      <Value Profile="(Default)">http://localhost:65080/PWCrackingService.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

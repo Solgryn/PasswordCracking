@@ -16,3 +16,15 @@ E:\Dropbox\Password Cracking\PWCrackingConsumer\PWCrackingConsumer\obj\Debug\PWC
 C:\Users\Jesper\Dropbox\Password Cracking\PWCrackingConsumer\PWCrackingConsumer\bin\Debug\PWCrackingConsumer.exe.config
 C:\Users\Jesper\Dropbox\Password Cracking\PWCrackingConsumer\PWCrackingConsumer\obj\Debug\PWCrackingConsumer.exe
 C:\Users\Jesper\Dropbox\Password Cracking\PWCrackingConsumer\PWCrackingConsumer\obj\Debug\PWCrackingConsumer.pdb
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster-6de2fee33f5852985f7858960913532c2156b5b0\bin\Debug\PWCrackingConsumer.exe.config
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster-6de2fee33f5852985f7858960913532c2156b5b0\obj\Debug\PWCrackingConsumer.exe
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster-6de2fee33f5852985f7858960913532c2156b5b0\obj\Debug\PWCrackingConsumer.pdb
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster-6de2fee33f5852985f7858960913532c2156b5b0\bin\Debug\PWCrackingConsumer.exe
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster-6de2fee33f5852985f7858960913532c2156b5b0\bin\Debug\PWCrackingConsumer.pdb
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster-6de2fee33f5852985f7858960913532c2156b5b0\obj\Debug\PWCrackingConsumer.csprojResolveAssemblyReference.cache
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\bin\Debug\PWCrackingConsumer.exe.config
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\obj\Debug\PWCrackingConsumer.exe
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\obj\Debug\PWCrackingConsumer.pdb
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\bin\Debug\PWCrackingConsumer.exe
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\bin\Debug\PWCrackingConsumer.pdb
+C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\obj\Debug\PWCrackingConsumer.csprojResolveAssemblyReference.cache

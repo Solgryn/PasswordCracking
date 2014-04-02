@@ -33,7 +33,7 @@ namespace PWCrackingConsumer
         {
             string[] result;
             result = Program.crackDelegates[_serviceId](_words, _userInfos);
-            
+
             if (result.Length > 0)
             {
                 Console.WriteLine("\tFound something:");

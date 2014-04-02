@@ -60,9 +60,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -77,13 +75,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://10.154.1.246:65080/PWCrackingService.asmx">
+    <WebReferenceUrl Include="http://localhost:65080/PWCrackingService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\PWCrack\</RelPath>
-      <UpdateFromURL>http://10.154.1.246:65080/PWCrackingService.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:65080/PWCrackingService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -94,6 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\PWCrack\PWCrackingService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
