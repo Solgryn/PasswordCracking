@@ -6,22 +6,19 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Services.Description;
-using PWCrackingConsumer.PWCrack;
 
 namespace PWCrackingConsumer
 {
     public static class Program
     {
-        public static PWCrackingService Pwc = new PWCrack.PWCrackingService();
-
         public delegate string[] CrackDelegate(string[] words, string[] userInfos);
 
-        public static List<CrackDelegate> crackDelegates = new List<CrackDelegate>();
+        public static List<CrackDelegate> CrackDelegates = new List<CrackDelegate>();
 
         static Program()
         {
             var a = new PWCrack.PWCrackingService();
-            crackDelegates.Add(a.Crack);
+            CrackDelegates.Add(a.Crack);
             //            var b = new PWCrack2.PWCrackingService();
             //            crackDelegates.Add(b.Crack);
         }
@@ -34,8 +31,6 @@ namespace PWCrackingConsumer
             //var words = ReadFile("webster-dictionary.txt"); //311141 words
             var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
 
-            Console.WriteLine(words[1] + "hi");
-            /*
             var stopwatch = Stopwatch.StartNew();
             var result = SendRequests(words, userInfos, 1000);
             stopwatch.Stop();
@@ -49,7 +44,7 @@ namespace PWCrackingConsumer
             }
             Console.WriteLine("____");
 
-            Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);*/
+            Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
         }
 
         public static string[] ReadFile(String filename)
@@ -85,7 +80,7 @@ namespace PWCrackingConsumer
                 k++; //New request/Task number
 
                 serviceId++; //Select new service to use
-                if (serviceId == crackDelegates.Count) //Loop around to the first service again when all services are used
+                if (serviceId == CrackDelegates.Count) //Loop around to the first service again when all services are used
                     serviceId = 0;
             }
             try

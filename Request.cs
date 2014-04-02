@@ -31,8 +31,7 @@ namespace PWCrackingConsumer
         /// <returns>Returns an array of found usernames and passwords.</returns>
         public string[] DoIt()
         {
-            string[] result;
-            result = Program.crackDelegates[_serviceId](_words, _userInfos);
+            var result = Program.CrackDelegates[_serviceId](_words, _userInfos);
 
             if (result.Length > 0)
             {
