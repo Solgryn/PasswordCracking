@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Web.Services.Description;
 
 namespace PWCrackingConsumer
 {
@@ -93,9 +92,22 @@ namespace PWCrackingConsumer
                         finalResult.Add(task.Result); //If the result isn't empty, add it to the final result
                 }
             }
-            catch (AggregateException)
+            catch (AggregateException e)
             {
-                Console.WriteLine("Something went wrong");
+                e.Handle((x) =>
+                {
+                    if (x is WebException)
+                    {
+                        Console.WriteLine("WebException({0}): {1}", serviceId, x.Message);
+                        if (x.InnerException is SocketException)
+                        {
+                            Console.WriteLine("SocketException({0}): {1}", serviceId, x.InnerException.Message);
+                        }
+                        return true;
+                    }
+                    Console.WriteLine("Unknown {0}({1}): {2}", x.GetType(), serviceId, x.Message);
+                    return true;
+                });
             }
             return finalResult;
         }
