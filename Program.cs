@@ -1,37 +1,49 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 
 namespace PWCrackingConsumer
 {
     public static class Program
     {
-        public delegate string[] CrackDelegate(string[] words, string[] userInfos);
+        public delegate string[] CrackDelegate(string[] words);
+        public delegate void GiveUserInfoDelegate(string[] userInfos);
 
         public static List<CrackDelegate> CrackDelegates = new List<CrackDelegate>();
+        public static List<GiveUserInfoDelegate> GiveUserInfoDelegates = new List<GiveUserInfoDelegate>();
+
+        public static string[] UserInfos;
 
         static Program()
         {
             var a = new PWCrack.PWCrackingService();
             CrackDelegates.Add(a.Crack);
-            //            var b = new PWCrack2.PWCrackingService();
-            //            crackDelegates.Add(b.Crack);
+            GiveUserInfoDelegates.Add(a.GiveUserInfo);
+            //var b = new PWCrack2.PWCrackingService();
+            //CrackDelegates.Add(b.Crack);
+            //GiveUserInfoDelegates.Add(b.GiveUserInfo);
         }
 
         static void Main(string[] args)
         {
             //Split the file into an array
-            var userInfos = ReadFile("passwords.txt");
+            UserInfos = ReadFile("passwords.txt");
 
-            //var words = ReadFile("webster-dictionary.txt"); //311141 words
-            var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
+            var words = ReadFile("webster-dictionary.txt"); //311141 words
+            //var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
+
+            UpdateSlavesUserInfos();
 
             var stopwatch = Stopwatch.StartNew();
-            var result = SendRequests(words, userInfos, 1000);
+            var result = SendRequests(words, 1000);
             stopwatch.Stop();
 
             //Output results
@@ -62,7 +74,7 @@ namespace PWCrackingConsumer
         /// <param name="userInfos">Array of user info.</param>
         /// <param name="chunkSize">Amount of words per request.</param>
         /// <returns>A list of found user names and passwords.</returns>
-        public static List<string[]> SendRequests(string[] words, string[] userInfos, int chunkSize)
+        public static List<string[]> SendRequests(string[] words, int chunkSize)
         {
             var finalResult = new List<string[]>(); //The final result list
             var tasks = new Task<string[]>[(words.Length / chunkSize) + 1]; //Each request is a task
@@ -73,7 +85,7 @@ namespace PWCrackingConsumer
             for (var i = 0; i < words.Length; i += chunkSize)
             {
                 Console.WriteLine("Started request #" + k + " (word #" + i + " to " + (i + chunkSize) + ")" + " service ID: " + serviceId);
-                var request = new Request(SubArray(words, i, chunkSize), userInfos, serviceId); //Make a request with the chunk, userInfos and the service
+                var request = new Request(SubArray(words, i, chunkSize), serviceId); //Make a request with the chunk and the service
                 var task = Task.Factory.StartNew((Func<string[]>)request.DoIt); //Create a new task and run it
                 tasks[k] = task; //Add to the task array
                 k++; //New request/Task number
@@ -110,6 +122,15 @@ namespace PWCrackingConsumer
                 });
             }
             return finalResult;
+        }
+
+        public static void UpdateSlavesUserInfos()
+        {
+            Console.WriteLine("Updating slaves..");
+            foreach (var giveUserInfoDelegate in GiveUserInfoDelegates)
+            {
+                giveUserInfoDelegate(UserInfos);
+            }
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ namespace PWCrackingConsumer
     public class Request
     {
         private readonly string[] _words;
-        private readonly string[] _userInfos;
         private readonly int _serviceId;
 
         /// <summary>
@@ -18,10 +17,9 @@ namespace PWCrackingConsumer
         /// <param name="words">Which words to request.</param>
         /// <param name="userInfos">Which user info to request.</param>
         /// <param name="serviceId">Which service to use.</param>
-        public Request(string[] words, string[] userInfos, int serviceId)
+        public Request(string[] words, int serviceId)
         {
             _words = words;
-            _userInfos = userInfos;
             _serviceId = serviceId;
         }
 
@@ -31,13 +29,14 @@ namespace PWCrackingConsumer
         /// <returns>Returns an array of found usernames and passwords.</returns>
         public string[] DoIt()
         {
-            var result = Program.CrackDelegates[_serviceId](_words, _userInfos);
+            var result = Program.CrackDelegates[_serviceId](_words);
 
             if (result.Length > 0)
             {
-                Console.WriteLine("\tFound something:");
+                Console.WriteLine("\tFound:");
                 foreach (var s in result)
                 {
+                    var parts = s.Split(':');
                     Console.WriteLine("\t\t" + string.Join(", ", s));
                 }
                 return result; //Return the result if something is found

@@ -6,7 +6,6 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="words" type="tns:ArrayOfString" />
-            <s:element minOccurs="0" maxOccurs="1" name="userInfos" type="tns:ArrayOfString" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -22,6 +21,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GiveUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userInfos" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GiveUserInfoResponse">
+        <s:complexType />
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="CrackSoapIn">
@@ -30,10 +39,20 @@
   <wsdl:message name="CrackSoapOut">
     <wsdl:part name="parameters" element="tns:CrackResponse" />
   </wsdl:message>
+  <wsdl:message name="GiveUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GiveUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="GiveUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GiveUserInfoResponse" />
+  </wsdl:message>
   <wsdl:portType name="PWCrackingServiceSoap">
     <wsdl:operation name="Crack">
       <wsdl:input message="tns:CrackSoapIn" />
       <wsdl:output message="tns:CrackSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GiveUserInfo">
+      <wsdl:input message="tns:GiveUserInfoSoapIn" />
+      <wsdl:output message="tns:GiveUserInfoSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PWCrackingServiceSoap" type="tns:PWCrackingServiceSoap">
@@ -47,11 +66,29 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GiveUserInfo">
+      <soap:operation soapAction="http://tempuri.org/GiveUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="PWCrackingServiceSoap12" type="tns:PWCrackingServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="Crack">
       <soap12:operation soapAction="http://tempuri.org/Crack" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GiveUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/GiveUserInfo" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

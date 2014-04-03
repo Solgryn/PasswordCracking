@@ -31,6 +31,8 @@ namespace PWCrackingConsumer.PWCrack {
         
         private System.Threading.SendOrPostCallback CrackOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GiveUserInfoOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -73,33 +75,62 @@ namespace PWCrackingConsumer.PWCrack {
         public event CrackCompletedEventHandler CrackCompleted;
         
         /// <remarks/>
+        public event GiveUserInfoCompletedEventHandler GiveUserInfoCompleted;
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Crack", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string[] Crack(string[] words, string[] userInfos) {
+        public string[] Crack(string[] words) {
             object[] results = this.Invoke("Crack", new object[] {
-                        words,
-                        userInfos});
+                        words});
             return ((string[])(results[0]));
         }
         
         /// <remarks/>
-        public void CrackAsync(string[] words, string[] userInfos) {
-            this.CrackAsync(words, userInfos, null);
+        public void CrackAsync(string[] words) {
+            this.CrackAsync(words, null);
         }
         
         /// <remarks/>
-        public void CrackAsync(string[] words, string[] userInfos, object userState) {
+        public void CrackAsync(string[] words, object userState) {
             if ((this.CrackOperationCompleted == null)) {
                 this.CrackOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCrackOperationCompleted);
             }
             this.InvokeAsync("Crack", new object[] {
-                        words,
-                        userInfos}, this.CrackOperationCompleted, userState);
+                        words}, this.CrackOperationCompleted, userState);
         }
         
         private void OnCrackOperationCompleted(object arg) {
             if ((this.CrackCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.CrackCompleted(this, new CrackCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GiveUserInfo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GiveUserInfo(string[] userInfos) {
+            this.Invoke("GiveUserInfo", new object[] {
+                        userInfos});
+        }
+        
+        /// <remarks/>
+        public void GiveUserInfoAsync(string[] userInfos) {
+            this.GiveUserInfoAsync(userInfos, null);
+        }
+        
+        /// <remarks/>
+        public void GiveUserInfoAsync(string[] userInfos, object userState) {
+            if ((this.GiveUserInfoOperationCompleted == null)) {
+                this.GiveUserInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGiveUserInfoOperationCompleted);
+            }
+            this.InvokeAsync("GiveUserInfo", new object[] {
+                        userInfos}, this.GiveUserInfoOperationCompleted, userState);
+        }
+        
+        private void OnGiveUserInfoOperationCompleted(object arg) {
+            if ((this.GiveUserInfoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GiveUserInfoCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -147,6 +178,10 @@ namespace PWCrackingConsumer.PWCrack {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.18408")]
+    public delegate void GiveUserInfoCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591
