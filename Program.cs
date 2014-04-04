@@ -14,6 +14,8 @@ namespace PWCrackingConsumer
 {
     public static class Program
     {
+        private const int CHUNK_SIZE = 1000;
+
         public delegate string[] CrackDelegate(string[] words);
         public delegate void GiveUserInfoDelegate(string[] userInfos);
 
@@ -24,12 +26,14 @@ namespace PWCrackingConsumer
 
         static Program()
         {
-            var a = new PWCrack.PWCrackingService();
-            CrackDelegates.Add(a.Crack);
-            GiveUserInfoDelegates.Add(a.GiveUserInfo);
-            //var b = new PWCrack2.PWCrackingService();
-            //CrackDelegates.Add(b.Crack);
-            //GiveUserInfoDelegates.Add(b.GiveUserInfo);
+            var localhost = new PWCrack.PWCrackingService();
+            AddService(localhost.Crack, localhost.GiveUserInfo);
+        }
+
+        static void AddService(CrackDelegate crackDelegate, GiveUserInfoDelegate giveUserInfoDelegate)
+        {
+            CrackDelegates.Add(crackDelegate);
+            GiveUserInfoDelegates.Add(giveUserInfoDelegate);
         }
 
         static void Main(string[] args)
@@ -43,7 +47,7 @@ namespace PWCrackingConsumer
             UpdateSlavesUserInfos();
 
             var stopwatch = Stopwatch.StartNew();
-            var result = SendRequests(words, 1000);
+            var result = SendRequests(words, CHUNK_SIZE);
             stopwatch.Stop();
 
             //Output results
