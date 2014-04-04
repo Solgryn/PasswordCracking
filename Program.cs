@@ -16,6 +16,11 @@ namespace PWCrackingConsumer
     {
         private const int CHUNK_SIZE = 1000;
 
+        private const string PASSWORDS_FILENAME = "../../passwords.txt";
+
+//        private const string DICTIONARY_FILENAME = "../../webster-dictionary.txt"; //311141 words
+        private const string DICTIONARY_FILENAME = "../../webster-dictionary-reduced.txt"; //5619 words
+
         public delegate string[] CrackDelegate(string[] words);
         public delegate void GiveUserInfoDelegate(string[] userInfos);
 
@@ -39,10 +44,8 @@ namespace PWCrackingConsumer
         static void Main(string[] args)
         {
             //Split the file into an array
-            UserInfos = ReadFile("passwords.txt");
-
-            var words = ReadFile("webster-dictionary.txt"); //311141 words
-            //var words = ReadFile("webster-dictionary-reduced.txt"); //5619 words
+            UserInfos = ReadFile(PASSWORDS_FILENAME);
+            var words = ReadFile(DICTIONARY_FILENAME);
 
             UpdateSlavesUserInfos();
 
