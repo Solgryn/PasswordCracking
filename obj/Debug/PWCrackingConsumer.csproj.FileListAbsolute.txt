@@ -28,3 +28,6 @@ C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\obj
 C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\bin\Debug\PWCrackingConsumer.exe
 C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\bin\Debug\PWCrackingConsumer.pdb
 C:\Users\Jesper\Documents\Visual Studio 2012\Projects\PasswordCrackingMaster\obj\Debug\PWCrackingConsumer.csprojResolveAssemblyReference.cache
+C:\Users\Jesper\Desktop\Visual Studio\PasswordCrackingMaster\bin\Debug\PWCrackingConsumer.exe.config
+C:\Users\Jesper\Desktop\Visual Studio\PasswordCrackingMaster\obj\Debug\PWCrackingConsumer.exe
+C:\Users\Jesper\Desktop\Visual Studio\PasswordCrackingMaster\obj\Debug\PWCrackingConsumer.pdb

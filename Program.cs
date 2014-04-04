@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Services.Description;
 
 namespace PWCrackingConsumer
 {
     public static class Program
     {
-        private const int CHUNK_SIZE = 1000;
+        private const int ChunkSize = 1000; //The amount of words to send with each request
 
         private const string PASSWORDS_FILENAME = "../../passwords.txt";
 
@@ -35,6 +31,11 @@ namespace PWCrackingConsumer
             AddService(localhost.Crack, localhost.GiveUserInfo);
         }
 
+        /// <summary>
+        /// Adds a service to the delegate list.
+        /// </summary>
+        /// <param name="crackDelegate">The Crack() method delegate.</param>
+        /// <param name="giveUserInfoDelegate">The GiveUserInfo() method delegate.</param>
         static void AddService(CrackDelegate crackDelegate, GiveUserInfoDelegate giveUserInfoDelegate)
         {
             CrackDelegates.Add(crackDelegate);
@@ -50,7 +51,7 @@ namespace PWCrackingConsumer
             UpdateSlavesUserInfos();
 
             var stopwatch = Stopwatch.StartNew();
-            var result = SendRequests(words, CHUNK_SIZE);
+            var result = SendRequests(words, ChunkSize);
             stopwatch.Stop();
 
             //Output results
@@ -65,6 +66,11 @@ namespace PWCrackingConsumer
             Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
         }
 
+        /// <summary>
+        /// Returns an array of a text file.
+        /// </summary>
+        /// <param name="filename">The file to read.</param>
+        /// <returns></returns>
         public static string[] ReadFile(String filename)
         {
             var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
@@ -131,6 +137,9 @@ namespace PWCrackingConsumer
             return finalResult;
         }
 
+        /// <summary>
+        /// Updates the UserInfo list on each web service.
+        /// </summary>
         public static void UpdateSlavesUserInfos()
         {
             Console.WriteLine("Updating slaves..");
