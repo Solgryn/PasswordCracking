@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PWCrackingConsumer
@@ -89,34 +89,55 @@ namespace PWCrackingConsumer
         /// <returns>A list of found user names and passwords.</returns>
         public static List<string[]> SendRequests(string[] words, int chunkSize)
         {
+            if (CrackDelegates.Count != GiveUserInfoDelegates.Count || CrackDelegates.Count == 0)
+                throw new Exception("Problem in service delegates.");
+
             var finalResult = new List<string[]>(); //The final result list
-            var tasks = new Task<string[]>[(words.Length / chunkSize) + 1]; //Each request is a task
-            var k = 0; //Which current request/task number
-            var serviceId = 0; //The service to use
+            ConcurrentBag<int> indexes = new ConcurrentBag<int>();
 
             //For every chunk of words
             for (var i = 0; i < words.Length; i += chunkSize)
             {
-                Console.WriteLine("Started request #" + k + " (word #" + i + " to " + (i + chunkSize) + ")" + " service ID: " + serviceId);
-                var request = new Request(SubArray(words, i, chunkSize), serviceId); //Make a request with the chunk and the service
-                var task = Task.Factory.StartNew((Func<string[]>)request.DoIt); //Create a new task and run it
-                tasks[k] = task; //Add to the task array
-                k++; //New request/Task number
+                indexes.Add(i);
+            }
 
-                serviceId++; //Select new service to use
-                if (serviceId == CrackDelegates.Count) //Loop around to the first service again when all services are used
-                    serviceId = 0;
-            }
-            try
+            List<Thread> threads = new List<Thread>();
+            //thread for each service
+            for (int i = 0; i < CrackDelegates.Count; ++i)
             {
-                Task.WaitAll(tasks); //Wait for all requests to complete
-                Console.WriteLine("All tasks done");
-                foreach (var task in tasks)
+                int serviceId = i;
+                Thread thread = new Thread(() =>
                 {
-                    if (task.Result != null)
-                        finalResult.Add(task.Result); //If the result isn't empty, add it to the final result
-                }
+                    while (!indexes.IsEmpty)
+                    {
+                        int index;
+                        if (indexes.TryTake(out index))
+                        {
+                            Console.WriteLine("Started request (word " + index + " to " + (index + chunkSize) + ")" + " service ID: " + serviceId);
+                            var request = new Request(SubArray(words, index, chunkSize), serviceId);
+                            var result = request.DoIt(); //TODO: if fails, return index to bag or call another service
+                            if (result != null)
+                            {
+                                lock (finalResult)
+                                {
+                                    finalResult.Add(result);
+                                }
+                            }
+                        }
+                    }
+                });
+                threads.Add(thread);
+                thread.Start();
             }
+
+            //wait for all service threads
+            foreach (Thread thread in threads)
+            {
+                thread.Join();
+            }
+            Console.WriteLine("All tasks done");
+            /*
+            TODO: update exception handling
             catch (AggregateException e)
             {
                 e.Handle((x) =>
@@ -134,6 +155,7 @@ namespace PWCrackingConsumer
                     return true;
                 });
             }
+            */
             return finalResult;
         }
 
@@ -145,7 +167,7 @@ namespace PWCrackingConsumer
             Console.WriteLine("Updating slaves..");
             foreach (var giveUserInfoDelegate in GiveUserInfoDelegates)
             {
-                giveUserInfoDelegate(UserInfos);
+                giveUserInfoDelegate(UserInfos); //TODO: add exception handling
             }
         }
 
